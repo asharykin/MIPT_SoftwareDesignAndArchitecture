@@ -1,0 +1,14 @@
+accounts:
+  - name: "Second Account"
+    balance: "3000"
+
+categories:
+  - type: "EXPENSE"
+    name: "Second Category"
+
+operations:
+  - type: "EXPENSE"
+    amount: "300"
+    account_id: "2"
+    description: "Second Operation"
+    category_id: "2"
