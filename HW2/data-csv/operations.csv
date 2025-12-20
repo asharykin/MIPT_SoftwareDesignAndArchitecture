@@ -1,0 +1,2 @@
+type,amount,account_id,description,category_id
+INCOME,400,3,Third Operation,3
