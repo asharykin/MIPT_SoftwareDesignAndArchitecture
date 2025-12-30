@@ -17,7 +17,7 @@ import ru.mipt.finance.command.impl.category.UpdateCategoryCommand;
 import ru.mipt.finance.command.impl.operation.CreateOperationCommand;
 import ru.mipt.finance.command.impl.operation.DeleteOperationCommand;
 import ru.mipt.finance.command.impl.operation.ListOperationsCommand;
-import ru.mipt.finance.composite.ImporterComposite;
+import ru.mipt.finance.importer.ImporterComposite;
 import ru.mipt.finance.facade.BankAccountFacade;
 import ru.mipt.finance.facade.CategoryFacade;
 import ru.mipt.finance.facade.OperationFacade;

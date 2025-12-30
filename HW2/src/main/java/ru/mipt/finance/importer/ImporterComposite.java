@@ -1,9 +1,7 @@
-package ru.mipt.finance.composite;
+package ru.mipt.finance.importer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mipt.finance.importer.DataFormat;
-import ru.mipt.finance.importer.DataImporter;
 
 import java.io.File;
 import java.io.IOException;
