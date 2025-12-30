@@ -16,4 +16,13 @@ public class Category {
     public static CategoryBuilder builder() {
         return new CategoryBuilder();
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

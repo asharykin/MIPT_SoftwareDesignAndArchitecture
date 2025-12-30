@@ -6,10 +6,10 @@ import ru.mipt.finance.model.BankAccount;
 
 import java.util.List;
 
-public class ListAccountsCommand implements Command {
+public class ListBankAccountsCommand implements Command {
     private final BankAccountFacade facade;
 
-    public ListAccountsCommand(BankAccountFacade facade) {
+    public ListBankAccountsCommand(BankAccountFacade facade) {
         this.facade = facade;
     }
 
@@ -24,7 +24,7 @@ public class ListAccountsCommand implements Command {
 
         System.out.println("\nBank Accounts:");
         for (BankAccount account : accounts) {
-            System.out.println(account.getId() + " | " + account.getName() + " | Balance: " + account.getBalance());
+            System.out.println(account);
         }
     }
 }

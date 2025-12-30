@@ -24,10 +24,7 @@ public class ListOperationsCommand implements Command {
 
         System.out.println("\nOperations:");
         for (Operation operation : operations) {
-            System.out.println(operation.getId() + " | " + operation.getType() +
-                    " | Amount: " + operation.getAmount() +
-                    " | Date: " + operation.getDate() +
-                    " | Description: " + operation.getDescription());
+            System.out.println(operation);
         }
     }
 }

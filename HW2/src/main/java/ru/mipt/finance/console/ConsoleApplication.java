@@ -8,7 +8,7 @@ import ru.mipt.finance.command.ExecutionTimeDecorator;
 import ru.mipt.finance.command.impl.ImportDataCommand;
 import ru.mipt.finance.command.impl.account.CreateBankAccountCommand;
 import ru.mipt.finance.command.impl.account.DeleteBankAccountCommand;
-import ru.mipt.finance.command.impl.account.ListAccountsCommand;
+import ru.mipt.finance.command.impl.account.ListBankAccountsCommand;
 import ru.mipt.finance.command.impl.account.UpdateBankAccountCommand;
 import ru.mipt.finance.command.impl.category.CreateCategoryCommand;
 import ru.mipt.finance.command.impl.category.DeleteCategoryCommand;
@@ -111,7 +111,7 @@ public class ConsoleApplication implements CommandLineRunner {
     }
 
     private void listAccounts(boolean trackTime) {
-        ListAccountsCommand command = new ListAccountsCommand(bankAccountFacade);
+        ListBankAccountsCommand command = new ListBankAccountsCommand(bankAccountFacade);
         executeCommand(command, trackTime);
     }
 

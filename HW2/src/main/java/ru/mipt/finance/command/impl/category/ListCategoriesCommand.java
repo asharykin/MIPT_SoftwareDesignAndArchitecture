@@ -24,7 +24,7 @@ public class ListCategoriesCommand implements Command {
 
         System.out.println("\nCategories:");
         for (Category category : categories) {
-            System.out.println(category.getId() + " | " + category.getName() + " | Type: " + category.getType());
+            System.out.println(category);
         }
     }
 }

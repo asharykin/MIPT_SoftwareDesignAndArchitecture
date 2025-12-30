@@ -23,4 +23,17 @@ public class Operation {
     public static OperationBuilder builder() {
         return new OperationBuilder();
     }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", type=" + type +
+                ", bankAccountId=" + bankAccountId +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", categoryId=" + categoryId +
+                '}';
+    }
 }

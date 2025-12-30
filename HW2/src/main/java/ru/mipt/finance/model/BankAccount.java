@@ -18,4 +18,13 @@ public class BankAccount {
     public static BankAccountBuilder builder() {
         return new BankAccountBuilder();
     }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
 }
