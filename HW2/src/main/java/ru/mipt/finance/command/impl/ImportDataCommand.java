@@ -23,7 +23,7 @@ public class ImportDataCommand implements Command {
     public void execute() {
         try {
             facade.importData(format, file);
-            System.out.println("Data imported successfully from: " + file.getAbsolutePath());
+            System.out.println("Data imported successfully from " + file.getAbsolutePath());
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

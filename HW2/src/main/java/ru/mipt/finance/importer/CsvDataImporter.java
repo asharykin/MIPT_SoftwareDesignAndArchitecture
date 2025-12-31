@@ -12,47 +12,53 @@ import ru.mipt.finance.facade.OperationFacade;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class CsvDataImporter extends DataImporter {
     private final CsvMapper csvMapper;
+    private final CsvSchema csvSchema;
 
     @Autowired
     public CsvDataImporter(BankAccountFacade bankAccountFacade, CategoryFacade categoryFacade,
                            OperationFacade operationFacade, CsvMapper csvMapper) {
         super(bankAccountFacade, categoryFacade, operationFacade);
         this.csvMapper = csvMapper;
+        this.csvSchema = csvMapper.schemaWithHeader();
     }
 
     @Override
-    protected Map<String, Object> parseFile(File file) throws IOException {
-        Map<String, Object> result = new HashMap<>();
-
-        File accountsFile = new File(file, "accounts.csv");
+    protected List<Map<String, String>> parseAccounts(File dir) throws IOException {
+        File accountsFile = new File(dir, "accounts.csv");
         if (accountsFile.exists()) {
-            result.put("accounts", readCsvFile(accountsFile));
+            return parseFile(accountsFile);
         }
-
-        File categoriesFile = new File(file, "categories.csv");
-        if (categoriesFile.exists()) {
-            result.put("categories", readCsvFile(categoriesFile));
-        }
-
-        File operationsFile = new File(file, "operations.csv");
-        if (operationsFile.exists()) {
-            result.put("operations", readCsvFile(operationsFile));
-        }
-
-        return result;
+        return List.of();
     }
 
-    private List<Map<String, String>> readCsvFile(File file) throws IOException {
-        CsvSchema schema = CsvSchema.emptySchema().withHeader();
+    @Override
+    protected List<Map<String, String>> parseCategories(File dir) throws IOException {
+        File categoriesFile = new File(dir, "categories.csv");
+        if (categoriesFile.exists()) {
+            return parseFile(categoriesFile);
+        }
+        return List.of();
+    }
+
+    @Override
+    protected List<Map<String, String>> parseOperations(File dir) throws IOException {
+        File operationsFile = new File(dir, "operations.csv");
+        if (operationsFile.exists()) {
+            return parseFile(operationsFile);
+        }
+        return List.of();
+    }
+
+    @Override
+    protected List<Map<String, String>> parseFile(File file) throws IOException {
         JsonParser parser = csvMapper.createParser(file);
-        parser.setSchema(schema);
+        parser.setSchema(csvSchema);
         return csvMapper.readValues(parser, new TypeReference<Map<String, String>>() {}).readAll();
     }
 

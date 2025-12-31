@@ -22,54 +22,59 @@ public abstract class DataImporter {
         this.operationFacade = operationFacade;
     }
 
-    public final void importData(File file) throws IOException {
-        if (!file.exists() || !file.canRead()) {
-            throw new IOException("Cannot read file: " + file.getAbsolutePath());
-        }
-        Map<String, Object> data = parseFile(file);
-        processAccounts(data);
-        processCategories(data);
-        processOperations(data);
+    public final void importData(File dir) throws IOException {
+        validateDirectory(dir);
+        List<Map<String, String>> accounts = parseAccounts(dir);
+        List<Map<String, String>> categories = parseCategories(dir);
+        List<Map<String, String>> operations = parseOperations(dir);
+        processAccounts(accounts);
+        processCategories(categories);
+        processOperations(operations);
     }
 
+    protected abstract List<Map<String, String>> parseAccounts(File dir) throws IOException;
 
-    protected abstract Map<String, Object> parseFile(File file) throws IOException;
+    protected abstract List<Map<String, String>> parseCategories(File dir) throws IOException;
 
-    private void processAccounts(Map<String, Object> data) {
-        if (data.containsKey("accounts")) {
-            List<Map<String, String>> accounts = (List<Map<String, String>>) data.get("accounts");
-            for (Map<String, String> accountData : accounts) {
-                String name = accountData.get("name");
-                BigDecimal balance = new BigDecimal(accountData.get("balance"));
-                bankAccountFacade.createBankAccount(name, balance);
-            }
+    protected abstract List<Map<String, String>> parseOperations(File dir) throws IOException;
+
+    private void validateDirectory(File dir) throws IOException {
+        if (!dir.exists()) {
+            throw new IOException("Cannot find directory " + dir.getAbsolutePath());
         }
-    }
-
-    private void processCategories(Map<String, Object> data) {
-        if (data.containsKey("categories")) {
-            List<Map<String, String>> categories = (List<Map<String, String>>) data.get("categories");
-            for (Map<String, String> categoryData : categories) {
-                String name = categoryData.get("name");
-                OperationType type = OperationType.valueOf(categoryData.get("type"));
-                categoryFacade.createCategory(name, type);
-            }
+        if (!dir.isDirectory()) {
+            throw new IOException(dir.getAbsolutePath() + " is not a directory");
         }
     }
 
-    private void processOperations(Map<String, Object> data) {
-        if (data.containsKey("operations")) {
-            List<Map<String, String>> operations = (List<Map<String, String>>) data.get("operations");
-            for (Map<String, String> operationData : operations) {
-                OperationType type = OperationType.valueOf(operationData.get("type"));
-                BigDecimal amount = new BigDecimal(operationData.get("amount"));
-                String description = operationData.get("description");
-                Integer accountId = Integer.parseInt(operationData.get("account_id"));
-                Integer categoryId = Integer.parseInt(operationData.get("category_id"));
-                operationFacade.createOperation(type, accountId, amount, categoryId, description);
-            }
+    private void processAccounts(List<Map<String, String>> accounts) {
+        for (Map<String, String> accountData : accounts) {
+            String name = accountData.get("name");
+            BigDecimal balance = new BigDecimal(accountData.get("balance"));
+            bankAccountFacade.createBankAccount(name, balance);
         }
     }
+
+    private void processCategories(List<Map<String, String>> categories) {
+        for (Map<String, String> categoryData : categories) {
+            String name = categoryData.get("name");
+            OperationType type = OperationType.valueOf(categoryData.get("type"));
+            categoryFacade.createCategory(name, type);
+        }
+    }
+
+    private void processOperations(List<Map<String, String>> operations) {
+        for (Map<String, String> operationData : operations) {
+            OperationType type = OperationType.valueOf(operationData.get("type"));
+            BigDecimal amount = new BigDecimal(operationData.get("amount"));
+            String description = operationData.get("description");
+            Integer accountId = Integer.parseInt(operationData.get("account_id"));
+            Integer categoryId = Integer.parseInt(operationData.get("category_id"));
+            operationFacade.createOperation(type, accountId, amount, categoryId, description);
+        }
+    }
+
+    protected abstract List<Map<String, String>> parseFile(File file) throws IOException;
 
     public abstract boolean supportsFormat(DataFormat format);
 }

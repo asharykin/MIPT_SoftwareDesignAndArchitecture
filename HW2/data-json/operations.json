@@ -1,0 +1,9 @@
+[
+  {
+    "type": "INCOME",
+    "amount": "200",
+    "account_id": "1",
+    "description": "First Operation",
+    "category_id": "1"
+  }
+]

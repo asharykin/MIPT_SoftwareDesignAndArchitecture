@@ -331,13 +331,9 @@ public class ConsoleApplication implements CommandLineRunner {
             }
         }
 
-        if (format == DataFormat.CSV) {
-            System.out.print("Enter path to directory with input files: ");
-        } else {
-            System.out.print("Enter path to input file: ");
-        }
+        System.out.print("Enter path to directory with input files: ");
         String filePath = scanner.nextLine();
-        File file =  new File(filePath);
+        File file = new File(filePath);
 
         ImportDataCommand command = new ImportDataCommand(importerComposite, format, file);
         executeCommand(command, true);
