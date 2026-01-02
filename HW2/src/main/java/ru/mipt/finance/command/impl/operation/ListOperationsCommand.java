@@ -1,11 +1,13 @@
 package ru.mipt.finance.command.impl.operation;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.OperationFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.Operation;
 
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class ListOperationsCommand extends BaseOperationCommand {
 
     @Override

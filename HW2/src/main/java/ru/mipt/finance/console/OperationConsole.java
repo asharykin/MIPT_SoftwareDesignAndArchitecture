@@ -81,7 +81,7 @@ public class OperationConsole extends BaseConsole {
         System.out.print("Enter description (optional): ");
         String description = scanner.nextLine();
 
-        CreateOperationCommand command = context.getBean(CreateOperationCommand.class, accountId, amount, categoryId, description);
+        CreateOperationCommand command = context.getBean(CreateOperationCommand.class, type, accountId, amount, description, categoryId);
         executeCommand(command, true);
     }
 

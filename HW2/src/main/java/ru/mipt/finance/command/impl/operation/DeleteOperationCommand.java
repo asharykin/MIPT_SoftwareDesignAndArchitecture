@@ -1,8 +1,10 @@
 package ru.mipt.finance.command.impl.operation;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.OperationFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("prototype")
 public class DeleteOperationCommand extends BaseOperationCommand {
     private final Integer operationId;
 

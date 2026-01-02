@@ -1,12 +1,14 @@
 package ru.mipt.finance.command.impl.operation;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.OperationFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.Operation;
 import ru.mipt.finance.model.OperationType;
 
 import java.math.BigDecimal;
 
+@Component
+@Scope("prototype")
 public class CreateOperationCommand extends BaseOperationCommand {
     private final OperationType type;
     private final Integer accountId;
