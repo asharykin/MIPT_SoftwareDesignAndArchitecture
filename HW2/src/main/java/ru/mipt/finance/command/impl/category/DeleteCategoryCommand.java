@@ -1,15 +1,14 @@
 package ru.mipt.finance.command.impl.category;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.CategoryFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class DeleteCategoryCommand implements Command {
-    private final CategoryFacade facade;
-
+@Component
+@Scope("prototype")
+public class DeleteCategoryCommand extends BaseCategoryCommand {
     private final Integer categoryId;
 
-    public DeleteCategoryCommand(CategoryFacade facade, Integer categoryId) {
-        this.facade = facade;
+    public DeleteCategoryCommand(Integer categoryId) {
         this.categoryId = categoryId;
     }
 

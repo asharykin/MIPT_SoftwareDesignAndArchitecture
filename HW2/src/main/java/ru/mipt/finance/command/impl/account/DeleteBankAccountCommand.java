@@ -1,15 +1,14 @@
 package ru.mipt.finance.command.impl.account;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.BankAccountFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class DeleteBankAccountCommand implements Command {
-    private final BankAccountFacade facade;
-
+@Component
+@Scope("prototype")
+public class DeleteBankAccountCommand extends BaseBankAccountCommand {
     private final Integer accountId;
 
-    public DeleteBankAccountCommand(BankAccountFacade facade, Integer accountId) {
-        this.facade = facade;
+    public DeleteBankAccountCommand(Integer accountId) {
         this.accountId = accountId;
     }
 

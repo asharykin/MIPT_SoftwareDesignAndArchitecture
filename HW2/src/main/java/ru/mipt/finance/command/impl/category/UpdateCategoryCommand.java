@@ -1,15 +1,15 @@
 package ru.mipt.finance.command.impl.category;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.CategoryFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class UpdateCategoryCommand implements Command {
-    private final CategoryFacade facade;
+@Component
+@Scope("prototype")
+public class UpdateCategoryCommand extends BaseCategoryCommand {
     private final Integer categoryId;
     private final String newName;
 
-    public UpdateCategoryCommand(CategoryFacade facade, Integer categoryId, String newName) {
-        this.facade = facade;
+    public UpdateCategoryCommand(Integer categoryId, String newName) {
         this.categoryId = categoryId;
         this.newName = newName;
     }

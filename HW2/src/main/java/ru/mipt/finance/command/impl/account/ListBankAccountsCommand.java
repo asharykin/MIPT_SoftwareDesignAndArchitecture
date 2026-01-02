@@ -1,17 +1,14 @@
 package ru.mipt.finance.command.impl.account;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.BankAccountFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.BankAccount;
 
 import java.util.List;
 
-public class ListBankAccountsCommand implements Command {
-    private final BankAccountFacade facade;
-
-    public ListBankAccountsCommand(BankAccountFacade facade) {
-        this.facade = facade;
-    }
+@Component
+@Scope("prototype")
+public class ListBankAccountsCommand extends BaseBankAccountCommand {
 
     @Override
     public void execute() {

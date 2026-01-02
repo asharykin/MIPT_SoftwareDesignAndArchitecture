@@ -1,18 +1,17 @@
 package ru.mipt.finance.command.impl.category;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.CategoryFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.Category;
 import ru.mipt.finance.model.OperationType;
 
-public class CreateCategoryCommand implements Command {
-    private final CategoryFacade facade;
-
+@Component
+@Scope("prototype")
+public class CreateCategoryCommand extends BaseCategoryCommand {
     private final String name;
     private final OperationType type;
 
-    public CreateCategoryCommand(CategoryFacade facade, String name, OperationType type) {
-        this.facade = facade;
+    public CreateCategoryCommand(String name, OperationType type) {
         this.name = name;
         this.type = type;
     }

@@ -1,17 +1,14 @@
 package ru.mipt.finance.command.impl.category;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.CategoryFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.Category;
 
 import java.util.List;
 
-public class ListCategoriesCommand implements Command {
-    private final CategoryFacade facade;
-
-    public ListCategoriesCommand(CategoryFacade facade) {
-        this.facade = facade;
-    }
+@Component
+@Scope("prototype")
+public class ListCategoriesCommand extends BaseCategoryCommand {
 
     @Override
     public void execute() {

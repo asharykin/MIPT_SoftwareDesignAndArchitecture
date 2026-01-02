@@ -6,12 +6,7 @@ import ru.mipt.finance.model.Operation;
 
 import java.util.List;
 
-public class ListOperationsCommand implements Command {
-    private final OperationFacade facade;
-
-    public ListOperationsCommand(OperationFacade facade) {
-        this.facade = facade;
-    }
+public class ListOperationsCommand extends BaseOperationCommand {
 
     @Override
     public void execute() {

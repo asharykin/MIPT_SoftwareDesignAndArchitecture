@@ -7,18 +7,15 @@ import ru.mipt.finance.model.OperationType;
 
 import java.math.BigDecimal;
 
-public class CreateOperationCommand implements Command {
-    private final OperationFacade facade;
-
+public class CreateOperationCommand extends BaseOperationCommand {
     private final OperationType type;
     private final Integer accountId;
     private final BigDecimal amount;
     private final String description;
     private final Integer categoryId;
 
-    public CreateOperationCommand(OperationFacade facade, OperationType type, Integer accountId,
-                                  BigDecimal amount, String description, Integer categoryId) {
-        this.facade = facade;
+    public CreateOperationCommand(OperationType type, Integer accountId, BigDecimal amount,
+                                  String description, Integer categoryId) {
         this.type = type;
         this.accountId = accountId;
         this.amount = amount;

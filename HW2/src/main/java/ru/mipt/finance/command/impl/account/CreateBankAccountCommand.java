@@ -1,19 +1,18 @@
 package ru.mipt.finance.command.impl.account;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.BankAccountFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.mipt.finance.model.BankAccount;
 
 import java.math.BigDecimal;
 
-public class CreateBankAccountCommand implements Command {
-    private final BankAccountFacade facade;
-
+@Component
+@Scope("prototype")
+public class CreateBankAccountCommand extends BaseBankAccountCommand {
     private final String name;
     private final BigDecimal initialBalance;
 
-    public CreateBankAccountCommand(BankAccountFacade facade, String name, BigDecimal initialBalance) {
-        this.facade = facade;
+    public CreateBankAccountCommand(String name, BigDecimal initialBalance) {
         this.name = name;
         this.initialBalance = initialBalance;
     }

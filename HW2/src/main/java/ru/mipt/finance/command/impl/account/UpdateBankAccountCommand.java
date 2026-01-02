@@ -1,16 +1,15 @@
 package ru.mipt.finance.command.impl.account;
 
-import ru.mipt.finance.command.Command;
-import ru.mipt.finance.facade.BankAccountFacade;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class UpdateBankAccountCommand implements Command {
-    private final BankAccountFacade facade;
-
+@Component
+@Scope("prototype")
+public class UpdateBankAccountCommand extends BaseBankAccountCommand {
     private final Integer accountId;
     private final String newName;
 
-    public UpdateBankAccountCommand(BankAccountFacade facade, Integer accountId, String newName) {
-        this.facade = facade;
+    public UpdateBankAccountCommand(Integer accountId, String newName) {
         this.accountId = accountId;
         this.newName = newName;
     }

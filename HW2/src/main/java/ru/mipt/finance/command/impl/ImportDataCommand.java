@@ -1,8 +1,8 @@
 package ru.mipt.finance.command.impl;
 
 import ru.mipt.finance.command.Command;
-import ru.mipt.finance.importer.ImporterComposite;
 import ru.mipt.finance.importer.DataFormat;
+import ru.mipt.finance.importer.ImporterComposite;
 
 import java.io.File;
 import java.io.IOException;
