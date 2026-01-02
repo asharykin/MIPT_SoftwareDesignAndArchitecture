@@ -1,29 +1,29 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import ru.mipt.finance.console.*;
 
-import java.util.Scanner;
-
-import static ru.mipt.finance.console.ConsoleUtils.readIntInput;
-
-@Component
-public class MainConsole implements CommandLineRunner {
+@SpringBootApplication
+public class ApplicationConsole extends BaseConsole implements CommandLineRunner {
     private final BankAccountConsole bankAccountConsole;
     private final CategoryConsole categoryConsole;
     private final OperationConsole operationConsole;
     private final ImportConsole importConsole;
-    private final Scanner scanner;
 
     @Autowired
-    public MainConsole(BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole,
-                       OperationConsole operationConsole, ImportConsole importConsole, Scanner scanner) {
+    public ApplicationConsole(BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole,
+                              OperationConsole operationConsole, ImportConsole importConsole) {
         this.bankAccountConsole = bankAccountConsole;
         this.categoryConsole = categoryConsole;
         this.operationConsole = operationConsole;
         this.importConsole = importConsole;
-        this.scanner = scanner;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApplicationConsole.class, args);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MainConsole implements CommandLineRunner {
         while (running) {
             printMainMenu();
 
-            int choice = readIntInput(scanner);
+            int choice = readIntInput();
 
             try {
                 switch (choice) {

@@ -4,27 +4,18 @@ import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.operation.CreateOperationCommand;
 import ru.mipt.finance.command.impl.operation.DeleteOperationCommand;
 import ru.mipt.finance.command.impl.operation.ListOperationsCommand;
-import ru.mipt.finance.facade.OperationFacade;
 import ru.mipt.finance.model.OperationType;
 
 import java.math.BigDecimal;
-import java.util.Scanner;
-
-import static ru.mipt.finance.console.ConsoleUtils.executeCommand;
-import static ru.mipt.finance.console.ConsoleUtils.readIntInput;
 
 @Component
-public class OperationConsole {
-    private final OperationFacade operationFacade;
+public class OperationConsole extends BaseConsole {
     private final BankAccountConsole bankAccountConsole;
     private final CategoryConsole categoryConsole;
-    private final Scanner scanner;
 
-    public OperationConsole(OperationFacade operationFacade, BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole, Scanner scanner) {
-        this.operationFacade = operationFacade;
+    public OperationConsole(BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole) {
         this.bankAccountConsole = bankAccountConsole;
         this.categoryConsole = categoryConsole;
-        this.scanner = scanner;
     }
 
     public void manageOperations() {
@@ -33,7 +24,7 @@ public class OperationConsole {
         while (managingOperations) {
             printMenu();
 
-            int choice = readIntInput(scanner);
+            int choice = readIntInput();
 
             try {
                 switch (choice) {
@@ -59,44 +50,54 @@ public class OperationConsole {
     }
 
 
-    public void listOperations(boolean trackTime) {
-        ListOperationsCommand command = new ListOperationsCommand(operationFacade);
+    void listOperations(boolean trackTime) {
+        ListOperationsCommand command = context.getBean(ListOperationsCommand.class);
         executeCommand(command, trackTime);
     }
 
     private void createOperation() {
-        bankAccountConsole.listAccounts(false);
+        bankAccountConsole.listBankAccounts(false);
         categoryConsole.listCategories(false);
 
         printOperationTypes();
 
-        int typeChoice = readIntInput(scanner);
+        int choice = readIntInput();
 
-        OperationType type;
-        switch (typeChoice) {
-            case 1 -> type = OperationType.INCOME;
-            case 2 -> type = OperationType.EXPENSE;
-            default -> {
-                System.out.println("Invalid option. Please try again.");
-                return;
-            }
+        OperationType type = getOperationType(choice);
+        if (type == null) {
+            return;
         }
 
         System.out.print("Enter bank account ID: ");
-        Integer accountId = readIntInput(scanner);
+        Integer accountId = readIntInput();
 
         System.out.print("Enter amount: ");
         String amountStr = scanner.nextLine();
         BigDecimal amount = new BigDecimal(amountStr);
 
         System.out.print("Enter category ID: ");
-        Integer categoryId = readIntInput(scanner);
+        Integer categoryId = readIntInput();
 
         System.out.print("Enter description (optional): ");
         String description = scanner.nextLine();
 
-        CreateOperationCommand command = new CreateOperationCommand(operationFacade, type, accountId, amount, description, categoryId);
+        CreateOperationCommand command = context.getBean(CreateOperationCommand.class, accountId, amount, categoryId, description);
         executeCommand(command, true);
+    }
+
+    private OperationType getOperationType(int choice) {
+        switch (choice) {
+            case 1 -> {
+                return OperationType.INCOME;
+            }
+            case 2 -> {
+                return OperationType.EXPENSE;
+            }
+            default -> {
+                System.out.println("Invalid option. Please try again.");
+                return null;
+            }
+        }
     }
 
     private void printOperationTypes() {
@@ -110,9 +111,9 @@ public class OperationConsole {
         listOperations(false);
 
         System.out.print("Enter operation ID to delete: ");
-        Integer id = readIntInput(scanner);
+        Integer id = readIntInput();
 
-        DeleteOperationCommand command = new DeleteOperationCommand(operationFacade, id);
+        DeleteOperationCommand command = context.getBean(DeleteOperationCommand.class, id);
         executeCommand(command, true);
     }
 }

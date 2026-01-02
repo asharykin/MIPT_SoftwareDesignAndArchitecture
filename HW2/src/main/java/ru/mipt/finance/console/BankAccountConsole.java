@@ -1,29 +1,15 @@
 package ru.mipt.finance.console;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.account.CreateBankAccountCommand;
 import ru.mipt.finance.command.impl.account.DeleteBankAccountCommand;
 import ru.mipt.finance.command.impl.account.ListBankAccountsCommand;
 import ru.mipt.finance.command.impl.account.UpdateBankAccountCommand;
-import ru.mipt.finance.facade.BankAccountFacade;
 
 import java.math.BigDecimal;
-import java.util.Scanner;
-
-import static ru.mipt.finance.console.ConsoleUtils.executeCommand;
-import static ru.mipt.finance.console.ConsoleUtils.readIntInput;
 
 @Component
-public class BankAccountConsole {
-    private final BankAccountFacade bankAccountFacade;
-    private final Scanner scanner;
-
-    @Autowired
-    public BankAccountConsole(BankAccountFacade bankAccountFacade, Scanner scanner) {
-        this.bankAccountFacade = bankAccountFacade;
-        this.scanner = scanner;
-    }
+public class BankAccountConsole extends BaseConsole {
 
     public void manageBankAccounts() {
         boolean managingAccounts = true;
@@ -31,14 +17,14 @@ public class BankAccountConsole {
         while (managingAccounts) {
             printMenu();
 
-            int choice = readIntInput(scanner);
+            int choice = readIntInput();
 
             try {
                 switch (choice) {
-                    case 1 -> listAccounts(true);
-                    case 2 -> createAccount();
-                    case 3 -> updateAccount();
-                    case 4 -> deleteAccount();
+                    case 1 -> listBankAccounts(true);
+                    case 2 -> createBankAccount();
+                    case 3 -> updateBankAccount();
+                    case 4 -> deleteBankAccount();
                     case 0 -> managingAccounts = false;
                     default -> System.out.println("Invalid option. Please try again.");
                 }
@@ -58,12 +44,12 @@ public class BankAccountConsole {
         System.out.print("Enter your choice: ");
     }
 
-    public void listAccounts(boolean trackTime) {
-        ListBankAccountsCommand command = new ListBankAccountsCommand(bankAccountFacade);
+    void listBankAccounts(boolean trackTime) {
+        ListBankAccountsCommand command = context.getBean(ListBankAccountsCommand.class);
         executeCommand(command, trackTime);
     }
 
-    private void createAccount() {
+    private void createBankAccount() {
         System.out.print("Enter account name: ");
         String name = scanner.nextLine();
 
@@ -71,30 +57,30 @@ public class BankAccountConsole {
         String balanceStr = scanner.nextLine();
         BigDecimal balance = balanceStr.isEmpty() ? BigDecimal.ZERO : new BigDecimal(balanceStr);
 
-        CreateBankAccountCommand command = new CreateBankAccountCommand(bankAccountFacade, name, balance);
+        CreateBankAccountCommand command = context.getBean(CreateBankAccountCommand.class, name, balance);
         executeCommand(command, true);
     }
 
-    private void updateAccount() {
-        listAccounts(false);
+    private void updateBankAccount() {
+        listBankAccounts(false);
 
-        System.out.print("Enter account ID to update: ");
-        Integer id = readIntInput(scanner);
+        System.out.print("Enter ID of the account you want to update: ");
+        Integer id = readIntInput();
 
         System.out.print("Enter new account name: ");
         String name = scanner.nextLine();
 
-        UpdateBankAccountCommand command = new UpdateBankAccountCommand(bankAccountFacade, id, name);
+        UpdateBankAccountCommand command = context.getBean(UpdateBankAccountCommand.class, id, name);
         executeCommand(command, true);
     }
 
-    private void deleteAccount() {
-        listAccounts(false);
+    private void deleteBankAccount() {
+        listBankAccounts(false);
 
-        System.out.print("Enter account ID to delete: ");
-        Integer id = readIntInput(scanner);
+        System.out.print("Enter ID of the account you want to delete: ");
+        Integer id = readIntInput();
 
-        DeleteBankAccountCommand command = new DeleteBankAccountCommand(bankAccountFacade, id);
+        DeleteBankAccountCommand command = context.getBean(DeleteBankAccountCommand.class, id);
         executeCommand(command, true);
     }
 }

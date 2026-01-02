@@ -1,48 +1,37 @@
 package ru.mipt.finance.console;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.ImportDataCommand;
 import ru.mipt.finance.importer.DataFormat;
 import ru.mipt.finance.importer.ImporterComposite;
 
 import java.io.File;
-import java.util.Scanner;
-
-import static ru.mipt.finance.console.ConsoleUtils.executeCommand;
-import static ru.mipt.finance.console.ConsoleUtils.readIntInput;
 
 @Component
-public class ImportConsole {
+public class ImportConsole extends BaseConsole {
     private final ImporterComposite importerComposite;
-    private final Scanner scanner;
 
-    public ImportConsole(ImporterComposite importerComposite, Scanner scanner) {
+    @Autowired
+    public ImportConsole(ImporterComposite importerComposite) {
         this.importerComposite = importerComposite;
-        this.scanner = scanner;
     }
 
     public void importData() {
         printMenu();
 
-        int formatChoice = readIntInput(scanner);
+        int choice = readIntInput();
 
-        DataFormat format;
-        switch (formatChoice) {
-            case 1 -> format = DataFormat.JSON;
-            case 2 -> format = DataFormat.YAML;
-            case 3 -> format = DataFormat.CSV;
-            default -> {
-                System.out.println("Invalid option. Please try again.");
-                return;
-            }
+        DataFormat format = getFormat(choice);
+
+        if (format != null) {
+            System.out.print("Enter path to the directory with input files: ");
+            String filePath = scanner.nextLine();
+            File file = new File(filePath);
+
+            ImportDataCommand command = new ImportDataCommand(importerComposite, format, file);
+            executeCommand(command, true);
         }
-
-        System.out.print("Enter path to directory with input files: ");
-        String filePath = scanner.nextLine();
-        File file = new File(filePath);
-
-        ImportDataCommand command = new ImportDataCommand(importerComposite, format, file);
-        executeCommand(command, true);
     }
 
     private void printMenu() {
@@ -51,6 +40,24 @@ public class ImportConsole {
         System.out.println("1. JSON");
         System.out.println("2. YAML");
         System.out.println("3. CSV");
-        System.out.print("Enter choice (1, 2 or 3): ");
+        System.out.print("Enter your choice (1, 2 or 3): ");
+    }
+
+    private DataFormat getFormat(int choice) {
+        switch (choice) {
+            case 1 -> {
+                return DataFormat.JSON;
+            }
+            case 2 -> {
+                return DataFormat.YAML;
+            }
+            case 3 -> {
+                return DataFormat.CSV;
+            }
+            default -> {
+                System.out.println("Invalid option. Please try again.");
+                return null;
+            }
+        }
     }
 }
