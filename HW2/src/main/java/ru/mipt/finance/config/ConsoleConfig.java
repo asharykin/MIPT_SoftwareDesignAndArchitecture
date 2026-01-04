@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class ConsoleConfig {
 
     @Bean
-    Scanner scanner() {
+    public Scanner scanner() {
         return new Scanner(System.in);
     }
 }
