@@ -1,4 +1,4 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance.cli;
 
 import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.operation.CreateOperationCommand;
@@ -9,12 +9,12 @@ import ru.mipt.finance.model.OperationType;
 import java.math.BigDecimal;
 
 @Component
-public class OperationConsole extends BaseConsole {
-    private final BankAccountConsole bankAccountConsole;
-    private final CategoryConsole categoryConsole;
+public class OperationCli extends BaseCli {
+    private final BankAccountCli bankAccountCli;
+    private final CategoryCli categoryConsole;
 
-    public OperationConsole(BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole) {
-        this.bankAccountConsole = bankAccountConsole;
+    public OperationCli(BankAccountCli bankAccountCli, CategoryCli categoryConsole) {
+        this.bankAccountCli = bankAccountCli;
         this.categoryConsole = categoryConsole;
     }
 
@@ -56,7 +56,7 @@ public class OperationConsole extends BaseConsole {
     }
 
     private void createOperation() {
-        bankAccountConsole.listBankAccounts(false);
+        bankAccountCli.listBankAccounts(false);
         categoryConsole.listCategories(false);
 
         printOperationTypes();

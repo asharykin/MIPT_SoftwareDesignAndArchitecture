@@ -4,26 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.mipt.finance.console.*;
+import ru.mipt.finance.cli.*;
 
 @SpringBootApplication
-public class ApplicationConsole extends BaseConsole implements CommandLineRunner {
-    private final BankAccountConsole bankAccountConsole;
-    private final CategoryConsole categoryConsole;
-    private final OperationConsole operationConsole;
-    private final ImportConsole importConsole;
+public class ApplicationCli extends BaseCli implements CommandLineRunner {
+    private final BankAccountCli bankAccountCli;
+    private final CategoryCli categoryConsole;
+    private final OperationCli operationConsole;
+    private final ImportCli importConsole;
 
     @Autowired
-    public ApplicationConsole(BankAccountConsole bankAccountConsole, CategoryConsole categoryConsole,
-                              OperationConsole operationConsole, ImportConsole importConsole) {
-        this.bankAccountConsole = bankAccountConsole;
+    public ApplicationCli(BankAccountCli bankAccountCli, CategoryCli categoryConsole,
+                          OperationCli operationConsole, ImportCli importConsole) {
+        this.bankAccountCli = bankAccountCli;
         this.categoryConsole = categoryConsole;
         this.operationConsole = operationConsole;
         this.importConsole = importConsole;
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ApplicationConsole.class, args);
+        SpringApplication.run(ApplicationCli.class, args);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ApplicationConsole extends BaseConsole implements CommandLineRunner
 
             try {
                 switch (choice) {
-                    case 1 -> bankAccountConsole.manageBankAccounts();
+                    case 1 -> bankAccountCli.manageBankAccounts();
                     case 2 -> categoryConsole.manageCategories();
                     case 3 -> operationConsole.manageOperations();
                     case 4 -> importConsole.importData();

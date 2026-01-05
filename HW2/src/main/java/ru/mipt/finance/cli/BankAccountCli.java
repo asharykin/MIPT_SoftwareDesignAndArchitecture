@@ -1,4 +1,4 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance.cli;
 
 import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.account.CreateBankAccountCommand;
@@ -9,7 +9,7 @@ import ru.mipt.finance.command.impl.account.UpdateBankAccountCommand;
 import java.math.BigDecimal;
 
 @Component
-public class BankAccountConsole extends BaseConsole {
+public class BankAccountCli extends BaseCli {
 
     public void manageBankAccounts() {
         boolean managingAccounts = true;

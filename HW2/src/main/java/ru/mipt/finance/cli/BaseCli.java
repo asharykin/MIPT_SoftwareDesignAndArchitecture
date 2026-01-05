@@ -1,4 +1,4 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -7,7 +7,7 @@ import ru.mipt.finance.command.ExecutionTimeDecorator;
 
 import java.util.Scanner;
 
-public abstract class BaseConsole {
+public abstract class BaseCli {
     protected Scanner scanner;
     protected ApplicationContext context;
 

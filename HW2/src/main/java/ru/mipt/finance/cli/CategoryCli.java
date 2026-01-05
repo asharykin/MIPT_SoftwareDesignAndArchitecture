@@ -1,4 +1,4 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance.cli;
 
 import org.springframework.stereotype.Component;
 import ru.mipt.finance.command.impl.category.CreateCategoryCommand;
@@ -8,7 +8,7 @@ import ru.mipt.finance.command.impl.category.UpdateCategoryCommand;
 import ru.mipt.finance.model.OperationType;
 
 @Component
-public class CategoryConsole extends BaseConsole {
+public class CategoryCli extends BaseCli {
 
     public void manageCategories() {
         boolean managingCategories = true;

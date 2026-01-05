@@ -1,4 +1,4 @@
-package ru.mipt.finance.console;
+package ru.mipt.finance.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,11 +9,11 @@ import ru.mipt.finance.importer.ImporterComposite;
 import java.io.File;
 
 @Component
-public class ImportConsole extends BaseConsole {
+public class ImportCli extends BaseCli {
     private final ImporterComposite importerComposite;
 
     @Autowired
-    public ImportConsole(ImporterComposite importerComposite) {
+    public ImportCli(ImporterComposite importerComposite) {
         this.importerComposite = importerComposite;
     }
 
