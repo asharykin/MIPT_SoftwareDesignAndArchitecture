@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 @Component
 public class OperationCli extends BaseCli {
     private final BankAccountCli bankAccountCli;
-    private final CategoryCli categoryConsole;
+    private final CategoryCli categoryCli;
 
-    public OperationCli(BankAccountCli bankAccountCli, CategoryCli categoryConsole) {
+    public OperationCli(BankAccountCli bankAccountCli, CategoryCli categoryCli) {
         this.bankAccountCli = bankAccountCli;
-        this.categoryConsole = categoryConsole;
+        this.categoryCli = categoryCli;
     }
 
     public void manageOperations() {
@@ -57,7 +57,7 @@ public class OperationCli extends BaseCli {
 
     private void createOperation() {
         bankAccountCli.listBankAccounts(false);
-        categoryConsole.listCategories(false);
+        categoryCli.listCategories(false);
 
         printOperationTypes();
 

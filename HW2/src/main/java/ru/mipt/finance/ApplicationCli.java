@@ -9,17 +9,17 @@ import ru.mipt.finance.cli.*;
 @SpringBootApplication
 public class ApplicationCli extends BaseCli implements CommandLineRunner {
     private final BankAccountCli bankAccountCli;
-    private final CategoryCli categoryConsole;
-    private final OperationCli operationConsole;
-    private final ImportCli importConsole;
+    private final CategoryCli categoryCli;
+    private final OperationCli operationCli;
+    private final ImportCli importCli;
 
     @Autowired
-    public ApplicationCli(BankAccountCli bankAccountCli, CategoryCli categoryConsole,
-                          OperationCli operationConsole, ImportCli importConsole) {
+    public ApplicationCli(BankAccountCli bankAccountCli, CategoryCli categoryCli,
+                          OperationCli operationCli, ImportCli importCli) {
         this.bankAccountCli = bankAccountCli;
-        this.categoryConsole = categoryConsole;
-        this.operationConsole = operationConsole;
-        this.importConsole = importConsole;
+        this.categoryCli = categoryCli;
+        this.operationCli = operationCli;
+        this.importCli = importCli;
     }
 
     public static void main(String[] args) {
@@ -38,9 +38,9 @@ public class ApplicationCli extends BaseCli implements CommandLineRunner {
             try {
                 switch (choice) {
                     case 1 -> bankAccountCli.manageBankAccounts();
-                    case 2 -> categoryConsole.manageCategories();
-                    case 3 -> operationConsole.manageOperations();
-                    case 4 -> importConsole.importData();
+                    case 2 -> categoryCli.manageCategories();
+                    case 3 -> operationCli.manageOperations();
+                    case 4 -> importCli.importData();
                     case 0 -> running = false;
                     default -> System.out.println("Invalid option. Please try again.");
                 }
